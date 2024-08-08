@@ -89,6 +89,13 @@
     padding: 15px; /* Adjust padding for smaller devices */
     font-size: 16px; /* Adjust font size for better readability */
   }
+
+  .btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+
 }
 
 textarea {
