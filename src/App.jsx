@@ -69,8 +69,9 @@ function App() {
         <textarea
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
+          placeholder='Enter Your Prompt Here'
           onKeyPress={handleKeyPress}
-          rows="4"
+          rows="3"
           cols="50"
         ></textarea>
         {loading && (
