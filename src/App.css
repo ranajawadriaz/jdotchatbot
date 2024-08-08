@@ -69,3 +69,35 @@
   margin-left: 20px;
   margin-right: 20px;
 }
+
+.app-container {
+  width: 100%; /* Make the container responsive */
+  max-width: 90%; /* Prevent it from stretching too much on larger screens */
+  margin: 0 auto; /* Center it horizontally */
+  padding: 20px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  border-radius: 8px; /* Optional: Add some border-radius for better aesthetics */
+  border: 1px solid #ccc; /* Optional: A border for better
+   visibility */
+   overflow: hidden;
+  /* background-color: #f9f9f9; Optional: Set a background color */
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    max-width: 95%; /* Adjust for smaller screens */
+    padding: 15px; /* Adjust padding for smaller devices */
+    font-size: 16px; /* Adjust font size for better readability */
+  }
+}
+
+textarea {
+  width: 100%; /* Make the textarea take full width of the container */
+  max-width: 600px; /* Set a maximum width for the textarea */
+  margin: 0 auto; /* Center the textarea horizontally */
+  padding: 10px; /* Add padding for better user interaction */
+  box-sizing: border-box; /* Include padding in width calculation */
+  border-radius: 8px; /* Optional: Add border-radius for aesthetics */
+  border: 1px solid #ccc; /* Optional: Add a border */
+}
+
