@@ -1,8 +1,110 @@
-# React + Vite
+# J. ChatBot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive AI-powered chatbot built with React and Vite, featuring Google's Gemini AI integration.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🗣️ Chat Functionality
+- **AI-Powered Conversations**: Integrated with Google Gemini 1.5 Flash for intelligent responses
+- **Conversation Memory**: AI remembers the entire conversation context for personalized responses
+- **Persistent Chat History**: Chat sessions persist until page reload (stored in browser session)
+- **Real-time Messaging**: Instant responses with loading indicators
+- **Auto-scroll**: Automatically scrolls to the latest message
+
+### 🎨 Modern UI/UX
+- **Dark/Light Mode Toggle**: Beautiful theme switching with system preference detection
+- **Responsive Design**: Optimized for all device sizes (desktop, tablet, mobile)
+- **Modern Chat Interface**: WhatsApp-style message bubbles with avatars
+- **Smooth Animations**: Elegant transitions and micro-interactions
+- **Custom Scrollbar**: Styled scrollbars that match the theme
+
+### 🎯 User Experience
+- **Keyboard Shortcuts**: Press Enter to send messages
+- **Empty State**: Friendly welcome message when no conversations exist
+- **Disabled States**: Smart button states based on input and loading status
+- **Accessibility**: Focus indicators and ARIA labels for screen readers
+
+### 📱 Responsive Features
+- **Mobile-First Design**: Touch-friendly interface on mobile devices
+- **Adaptive Layouts**: Button arrangements change on smaller screens
+- **iOS Safari Support**: Proper font sizing to prevent zoom on input focus
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Google Gemini API key
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd my-chatbot
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your Google Gemini API key:
+```
+VITE_API_KEY=your_gemini_api_key_here
+```
+
+4. Start the development server:
+```bash
+npm run dev
+```
+
+5. Open your browser and navigate to `http://localhost:5173`
+
+## 🔧 Configuration
+
+### Environment Variables
+- `VITE_API_KEY`: Your Google Gemini API key (required)
+
+### Theme Persistence
+- Dark/Light mode preference is stored in localStorage
+- Chat history is stored in sessionStorage (persists until tab close)
+- Conversation context is maintained throughout the session for personalized responses
+- Very long conversations may hit API token limits and require clearing chat history
+
+## 🛠️ Built With
+
+- **React 18** - UI framework
+- **Vite** - Build tool and dev server
+- **Axios** - HTTP client for API requests
+- **Google Gemini AI** - AI conversation engine
+- **CSS Custom Properties** - Theming and responsive design
+
+## 📱 Browser Support
+
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## 🎨 Design Features
+
+- **CSS Variables**: Centralized theming system
+- **Modern Gradients**: Beautiful color transitions
+- **Box Shadows**: Subtle depth and elevation
+- **Smooth Transitions**: 300ms animations throughout
+- **Custom Scrollbars**: Themed scrollbars for better UX
+
+## 🔒 Privacy & Security
+
+- No backend storage - all data stays in your browser
+- Chat history clears on page refresh
+- API key stored securely in environment variables
+- No tracking or analytics
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
