@@ -25,9 +25,17 @@ A modern, responsive AI-powered chatbot built with React and Vite, featuring Goo
 - **Accessibility**: Focus indicators and ARIA labels for screen readers
 
 ### 📱 Responsive Features
-- **Mobile-First Design**: Touch-friendly interface on mobile devices
-- **Adaptive Layouts**: Button arrangements change on smaller screens
-- **iOS Safari Support**: Proper font sizing to prevent zoom on input focus
+- **Mobile-First Design**: Optimized for mobile devices with touch-friendly interface
+- **Adaptive Layouts**: Intelligent layout changes for different screen sizes
+- **Multiple Breakpoints**: Support for screens from 360px to 1400px+ wide
+- **Device-Specific Optimizations**: 
+  - iOS Safari support with proper font sizing
+  - Android touch optimization
+  - Landscape orientation handling
+- **Overflow Protection**: Prevents horizontal scrolling on any device
+- **Word Breaking**: Smart text wrapping for long URLs and code
+- **Flexible Tables**: Responsive tables that stack on mobile devices
+- **Touch Gestures**: Smooth scrolling and touch interactions
 
 ## 🚀 Getting Started
 
@@ -97,6 +105,38 @@ npm run dev
 - **Box Shadows**: Subtle depth and elevation
 - **Smooth Transitions**: 300ms animations throughout
 - **Custom Scrollbars**: Themed scrollbars for better UX
+
+## 📱 Responsive Testing
+
+The chatbot has been tested and optimized for:
+
+### Screen Sizes
+- **Ultra-wide**: 1400px+ (desktop monitors)
+- **Desktop**: 1200px - 1400px
+- **Laptop**: 992px - 1199px
+- **Tablet**: 768px - 991px
+- **Mobile**: 480px - 767px
+- **Small Mobile**: 360px - 479px
+- **Very Small**: <360px
+
+### Device Types
+- iPhone (all sizes from SE to Pro Max)
+- Android phones (various manufacturers)
+- iPad and Android tablets
+- Desktop computers and laptops
+- Ultra-wide monitors
+
+### Orientations
+- Portrait mode optimization
+- Landscape mode adjustments
+- Automatic height adjustments
+
+### Testing Tips
+To test responsiveness:
+1. Use browser developer tools
+2. Try different zoom levels (50% - 200%)
+3. Test on actual devices when possible
+4. Check both portrait and landscape orientations
 
 ## 🔒 Privacy & Security
 
