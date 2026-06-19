@@ -1,150 +1,96 @@
 # J. ChatBot
 
-A modern, responsive AI-powered chatbot built with React and Vite, featuring Google's Gemini AI integration.
+A modern, responsive AI chat app built with **React + Vite** and **Material UI**,
+powered by **Llama 3.3 70B on Groq** (fast streaming responses). The Groq API key
+is kept secret behind a serverless function, so it never ships to the browser.
 
-## ✨ Features
+## ✨ Highlights
 
-### 🗣️ Chat Functionality
-- **AI-Powered Conversations**: Integrated with Google Gemini 1.5 Flash for intelligent responses
-- **Conversation Memory**: AI remembers the entire conversation context for personalized responses
-- **Persistent Chat History**: Chat sessions persist until page reload (stored in browser session)
-- **Real-time Messaging**: Instant responses with loading indicators
-- **Auto-scroll**: Automatically scrolls to the latest message
+- ⚡ **Streaming responses** — replies appear token-by-token (like ChatGPT)
+- 🔒 **Secret-safe** — the API key lives only on the server (Vercel function), never in the bundle
+- 🎨 **Material UI** with light/dark themes (follows your OS preference on first visit)
+- 📱 **App-style layout** — the page never scrolls; only the message list does. Fully responsive
+- 🧠 **Session memory** — remembers the conversation while the tab is open
+- 💬 **WhatsApp button** — floating button that opens a chat with you, with a prefilled message
+- ✍️ Markdown + syntax-highlighted code blocks with one-click copy
 
-### 🎨 Modern UI/UX
-- **Dark/Light Mode Toggle**: Beautiful theme switching with system preference detection
-- **Responsive Design**: Optimized for all device sizes (desktop, tablet, mobile)
-- **Modern Chat Interface**: WhatsApp-style message bubbles with avatars
-- **Smooth Animations**: Elegant transitions and micro-interactions
-- **Custom Scrollbar**: Styled scrollbars that match the theme
+## 🏗️ How the API key stays secret
 
-### 🎯 User Experience
-- **Keyboard Shortcuts**: Press Enter to send messages
-- **Empty State**: Friendly welcome message when no conversations exist
-- **Disabled States**: Smart button states based on input and loading status
-- **Accessibility**: Focus indicators and ARIA labels for screen readers
+A frontend-only app **cannot** hold a secret — anything in the browser bundle
+(including Vite `VITE_*` variables) is public. So the flow is:
 
-### 📱 Responsive Features
-- **Mobile-First Design**: Optimized for mobile devices with touch-friendly interface
-- **Adaptive Layouts**: Intelligent layout changes for different screen sizes
-- **Multiple Breakpoints**: Support for screens from 360px to 1400px+ wide
-- **Device-Specific Optimizations**: 
-  - iOS Safari support with proper font sizing
-  - Android touch optimization
-  - Landscape orientation handling
-- **Overflow Protection**: Prevents horizontal scrolling on any device
-- **Word Breaking**: Smart text wrapping for long URLs and code
-- **Flexible Tables**: Responsive tables that stack on mobile devices
-- **Touch Gestures**: Smooth scrolling and touch interactions
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- Google Gemini API key
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd my-chatbot
+```
+Browser  ──POST /api/chat──►  Edge Function (api/chat.js)  ──+ secret key──►  Groq API
+   ▲                              (runs on Vercel's servers)                      │
+   └───────────────────  streamed text response  ◄──────────────────────────────┘
 ```
 
-2. Install dependencies:
-```bash
-npm install
+The key is read from `process.env.GROQ_API_KEY` **on the server only**.
+
+## 🚀 Local development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create `.env.local` (copy from `.env.example`) and add your key:
+   ```
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+   > Note: it's `GROQ_API_KEY`, **not** `VITE_GROQ_API_KEY`. The `VITE_` prefix would
+   > leak it into the public frontend bundle.
+3. Run the dev server:
+   ```bash
+   npm run dev
+   ```
+   A built-in dev middleware serves `/api/chat` locally using your `.env.local` key,
+   so the chat works without `vercel dev`. (`vercel dev` also works if you prefer it.)
+
+Get a free key at <https://console.groq.com/keys>.
+
+## ☁️ Deploying to Vercel
+
+1. Push this repo to GitHub and import it in Vercel (framework preset: **Vite** — auto-detected).
+2. In **Project → Settings → Environment Variables**, add:
+   | Name | Value | Environments |
+   | --- | --- | --- |
+   | `GROQ_API_KEY` | your Groq key | Production, Preview, Development |
+3. Deploy. Vercel automatically turns `api/chat.js` into a serverless Edge function at `/api/chat`.
+
+That's it — no extra config needed. The frontend and the function deploy together.
+
+## ⚙️ Personalize it (`src/config.js`)
+
+Open [`src/config.js`](src/config.js) and set:
+
+- `WHATSAPP_NUMBER` — **your** number in international format, digits only (e.g. `923001234567`)
+- `WHATSAPP_PREFILLED_MESSAGE` — the message visitors send you
+- `BOT_NAME`, `BOT_TAGLINE`, `SYSTEM_PROMPT`, `SUGGESTED_PROMPTS`
+
+## 🧱 Project structure
+
+```
+api/
+  chat.js            Vercel Edge function — secure Groq proxy (streaming)
+  _groq.js           Shared Groq helpers (used by the function AND dev middleware)
+src/
+  App.jsx            App shell: theme provider + fixed full-viewport layout
+  theme.js           MUI light/dark theme factory
+  config.js          ← edit me (WhatsApp number, bot identity, prompts)
+  hooks/useChat.js   Chat state, streaming, sessionStorage history
+  components/        Header, MessageList, Message, ChatInput, EmptyState,
+                     MarkdownRenderer, TypingIndicator, WhatsAppFab
+vite.config.js       Build chunking + local /api/chat dev middleware
 ```
 
-3. Set up environment variables:
-   - Copy `.env.example` to `.env`
-   - Add your Google Gemini API key:
-```
-VITE_API_KEY=your_gemini_api_key_here
-```
+## 🛠️ Built with
 
-4. Start the development server:
-```bash
-npm run dev
-```
+- React 18 · Vite 5
+- Material UI (`@mui/material`, `@mui/icons-material`) + Emotion
+- `react-markdown` + `react-syntax-highlighter`
+- Groq API (`llama-3.3-70b-versatile`)
 
-5. Open your browser and navigate to `http://localhost:5173`
+## 🔒 Privacy
 
-## 🔧 Configuration
-
-### Environment Variables
-- `VITE_API_KEY`: Your Google Gemini API key (required)
-
-### Theme Persistence
-- Dark/Light mode preference is stored in localStorage
-- Chat history is stored in sessionStorage (persists until tab close)
-- Conversation context is maintained throughout the session for personalized responses
-- Very long conversations may hit API token limits and require clearing chat history
-
-## 🛠️ Built With
-
-- **React 18** - UI framework
-- **Vite** - Build tool and dev server
-- **Axios** - HTTP client for API requests
-- **Google Gemini AI** - AI conversation engine
-- **CSS Custom Properties** - Theming and responsive design
-
-## 📱 Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 🎨 Design Features
-
-- **CSS Variables**: Centralized theming system
-- **Modern Gradients**: Beautiful color transitions
-- **Box Shadows**: Subtle depth and elevation
-- **Smooth Transitions**: 300ms animations throughout
-- **Custom Scrollbars**: Themed scrollbars for better UX
-
-## 📱 Responsive Testing
-
-The chatbot has been tested and optimized for:
-
-### Screen Sizes
-- **Ultra-wide**: 1400px+ (desktop monitors)
-- **Desktop**: 1200px - 1400px
-- **Laptop**: 992px - 1199px
-- **Tablet**: 768px - 991px
-- **Mobile**: 480px - 767px
-- **Small Mobile**: 360px - 479px
-- **Very Small**: <360px
-
-### Device Types
-- iPhone (all sizes from SE to Pro Max)
-- Android phones (various manufacturers)
-- iPad and Android tablets
-- Desktop computers and laptops
-- Ultra-wide monitors
-
-### Orientations
-- Portrait mode optimization
-- Landscape mode adjustments
-- Automatic height adjustments
-
-### Testing Tips
-To test responsiveness:
-1. Use browser developer tools
-2. Try different zoom levels (50% - 200%)
-3. Test on actual devices when possible
-4. Check both portrait and landscape orientations
-
-## 🔒 Privacy & Security
-
-- No backend storage - all data stays in your browser
-- Chat history clears on page refresh
-- API key stored securely in environment variables
-- No tracking or analytics
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+- No database; conversation lives in your browser's `sessionStorage` for the tab session.
+- The API key never reaches the browser — it's only used server-side.

@@ -5,9 +5,10 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
+  // Global ignores (must be its own object to apply project-wide).
+  { ignores: ['dist', 'node_modules'] },
   {
     files: ['**/*.{js,jsx}'],
-    ignores: ['dist'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -29,10 +30,20 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      // This project uses plain JSX (no TypeScript / PropTypes) by design.
+      'react/prop-types': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+    },
+  },
+  {
+    // Server-side code: serverless functions + the Vite config / dev middleware.
+    // These run on Node / Vercel Edge, so use Node globals.
+    files: ['api/**/*.js', 'vite.config.js'],
+    languageOptions: {
+      globals: { ...globals.node },
     },
   },
 ]
