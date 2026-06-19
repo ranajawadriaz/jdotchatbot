@@ -6,7 +6,7 @@
 //    digits only — no "+", no spaces, no dashes.
 //    Example for Pakistan (+92 300 1234567)  ->  '923001234567'
 //    Example for USA      (+1 415 5550123)   ->  '14155550123'
-export const WHATSAPP_NUMBER = '923001234567'; // <-- CHANGE THIS
+export const WHATSAPP_NUMBER = '923011119707'; // +92 301 1119707
 
 // Pre-filled message the visitor sends you from the chatbot site.
 export const WHATSAPP_PREFILLED_MESSAGE =
